@@ -3,7 +3,7 @@ R = 83.14  # cm³·bar/(mol·K)
 
 #---------------------------------------------------------------------------------------------------
 
-#Calcular o volume molar (liquido e vapor) usando o modelo Peng-Robinson (PR)
+#Calcular o volume molar (liquido e vapor) usando o modelo van der Waals (vdW)
 def volumeMolar(fase, Tc, Pc, T, P, max_iter=100, tol=0.001):
     
     #Gera valores das variaveis A (atração molecular) e B (volume molecular)do modelo Peng-Robinson (PR)
