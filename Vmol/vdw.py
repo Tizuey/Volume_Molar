@@ -3,24 +3,27 @@ R = 83.14  # cm³·bar/(mol·K)
 
 #---------------------------------------------------------------------------------------------------
 
-#Calcular o volume molar (liquido e vapor) usando o modelo van der Waals (vdW)
+# Calcular o volume molar (líquido e vapor) usando o modelo van der Waals (vdW)
 def volumeMolar(fase, Tc, Pc, T, P, max_iter=100, tol=0.001):
-    
-    #Gera valores das variaveis A (atração molecular) e B (volume molecular)do modelo Peng-Robinson (PR)
+    # Calcula parâmetros a e b do modelo vdW
     a = (27 * R**2 * Tc**2) / (64 * Pc)
     b = (R * Tc) / (8 * Pc)
-    # O v vai ser b se a fase for líquida, ou (RT/P) se for vapor
+
+    # Chute inicial: líquido -> V = b (volume mínimo); vapor -> V = RT/P (volume ideal)
     V = b if fase == 'L' else (R * T) / P
-    
+
     for i in range(max_iter):
-        # Armazena o volume antigo para verificar convergência
         V_antigo = V
-        
-        V = (R * T) / P + b - a / (P * V_antigo)
-        
+
+        # Equação de van der Waals resolvida para V (forma iterativa):
+        # P = (RT)/(V - b) - a/V² → Isolando V:
+        V = (R * T) / (P + a / (V_antigo ** 2)) + b
+
         # Verifica convergência
         if abs(V - V_antigo) < tol:
+            # Garante que V > b (fisicamente válido)
+            if V <= b:
+                raise ValueError(f"Volume inválido (V <= b) na fase {'líquida' if fase == 'L' else 'vapor'}")
             return V
-    
-    # Se não convergiu
-    raise ValueError(f"Não houve convergência na fase {'líquida' if fase == 'L' else 'vapor'}")      
+
+    raise ValueError(f"Não houve convergência na fase {'líquida' if fase == 'L' else 'vapor'}")
