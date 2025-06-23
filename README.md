@@ -14,8 +14,8 @@ Este projeto implementa um programa computacional para o cálculo do volume mola
 -----
 
 ## 🎯 Objetivo do Projeto
+O objetivo principal deste programa é determinar o **volume molar** e a **massa específica** de substâncias puras em condições específicas de temperatura e pressão. Ele utiliza a **Equação 1** fornecida no enunciado para um cálculo iterativo de ponto fixo, aplicando os parâmetros `a` e `b` específicos para cada modelo termodinâmico escolhido
 
-O objetivo principal deste programa é determinar o **volume molar** e a **massa específica** de substâncias puras em condições específicas de temperatura e pressão. Ele utiliza a **Equação 1** fornecida no enunciado para um cálculo iterativo de ponto fixo, aplicando os parâmetros `a` e `b` específicos para cada modelo termodinâmico escolhido.
 ![programa](./img/programa.png)
 ![resultado](./img/resultados.png)
 -----
