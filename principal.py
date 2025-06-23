@@ -48,6 +48,9 @@ def main():
     massaMolar = float(input(f"Digite a massa molar de {nomeSubs} [g/mol]: "))
     tc = float(input(f"Digite a temperatura crítica (Tc) de {nomeSubs} [K]: "))
     pc = float(input(f"Digite a pressão crítica (Pc) de {nomeSubs} [bar]: "))
+    print("")
+    print("Exemplo de T = 333.15K = 60°C  e  P = 13.76  ")
+    print("")
     celsius = float(input("Digite a temperatura de operação (T) [°C]: "))
     bar = float(input("Digite a pressão de operação (P) [bar]: "))
 
