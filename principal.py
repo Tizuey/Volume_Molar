@@ -1,6 +1,5 @@
 #importando as funções que serão utilizadas
-from Vmol import vdw, rk, pr
-import pandas as pd  # Para criação de DataFrames e exportação para Excel
+from Vmol.vmol import vmol
 
 
 #Calcular a massa específica 
@@ -11,66 +10,95 @@ def calcular_massaEspecifica(V, massa_molar):
 
 def main():
     # Dados do Cloreto de Metila (exemplo)
-    dados = {
-        'nome': 'Cloreto de Metila',
-        'massa_molar': 50.488,  # g/mol
-        'Tc': 416.3,  # K
-        'Pc': 66.80   # bar
+    substancias = {
+        '1': {
+            'nome': 'Cloreto de Metila',
+            'massa_molar': 50.488,  
+            'Tc': 416.3,           
+            'Pc': 66.80             
+        },
+        '2': {
+            'nome': 'Metano',
+            'massa_molar': 16.043, 
+            'Tc': 190.56,           
+            'Pc': 45.99             
+        },
+        '3': {
+            'nome': 'Etano',
+            'massa_molar': 30.07,  
+            'Tc': 305.32,           
+            'Pc': 48.72             
+        }
     }
-    T = 60 + 273.15  # Conversão para Kelvin
-    P = 13.76        # bar
 
-    # Seleção do modelo
-    print("Iniciando Calculo de volume e massa molecucar (Liquido & Gasoso)")
-    print("AMBIENTE ->   T = 60 C  e  P = 13,76 b")
-    nomeSubs = input("Digite o nome da Substancia:  ")
-    massaMolar = float(input("Digite a massa molar em vez de virgula uso  (.):  "))
-    Tc = float(input("Digite a Temperatura Critica (Tc) em vez de virgula uso  (.):  "))
-    Pc = float(input("Digite a pressão Critica (Pc) em vez de virgula uso  (.):  "))
+    #Inicio do programa
+    print("Calculo de volume e massa molecucar (Liquido & Gasoso)")
+    print("-----------------------------------------------------")
+    print("")
+    print("S U B S T Â N C I A S      D E     E X E M P L O")
+    print(substancias['1'])
+    print(substancias['2'])
+    print(substancias['3'])
+    print("")
+    print("-----------------------------------------------------")
+    # Pega os dados para o calculo do volume
+    print("ATENÇÃO SEPARE OS DECIMAIS COM . E NÃO ,")
+    print("")
+    nomeSubs = input("Digite o nome do composto: ").strip()
+    massaMolar = float(input(f"Digite a massa molar de {nomeSubs} [g/mol]: "))
+    tc = float(input(f"Digite a temperatura crítica (Tc) de {nomeSubs} [K]: "))
+    pc = float(input(f"Digite a pressão crítica (Pc) de {nomeSubs} [bar]: "))
+    celsius = float(input("Digite a temperatura de operação (T) [°C]: "))
+    bar = float(input("Digite a pressão de operação (P) [bar]: "))
+
+
+    # Converter temperatura para Kelvin
+    kelvin = celsius + 273.15 
+
+    # Criando os "vetores" CRT e COND 
+    crt = [tc, pc]
+    cond = [kelvin, bar]
 
     modelo = input("Escolha o modelo (vdW/RK/PR): ").strip().upper()
 
-    # Cálculo para ambas as fases
     resultados = []
-    for fase in ['L', 'V']:
+    for fase in ['L','V']:
         try:
-            if modelo == 'VDW':  
-                V = vdw.volumeMolar(fase, Tc, Pc, T, P)
-            elif modelo == 'RK':
-                V = rk.volumeMolar(fase, Tc, Pc, T, P)
-            elif modelo == 'PR':
-                V = pr.volumeMolar(fase, Tc, Pc, T, P)
-            rho = calcular_massaEspecifica(V, massaMolar)
+            V = vmol(modelo,fase,crt,cond)
+            massaEspecifica = calcular_massaEspecifica(V, massaMolar)
             
             resultados.append({
-                'Substância': dados['nome'],  
+                'Substância':  nomeSubs,  
                 'Modelo': modelo,
                 'Fase': 'Líquido' if fase == 'L' else 'Vapor',
                 'Volume Molar (cm³/mol)': round(V, 4),
-                'Massa Específica (g/cm³)': round(rho, 6) 
+                'Massa Específica (g/cm³)': round(massaEspecifica, 6) 
             })
         except ValueError as e:
             print(f"Erro: {e}")
             continue
-    # Exporta para Excel (opcional)
-    df = pd.DataFrame(resultados) 
-    try:
-        df.to_excel('resultados.xlsx', index=False)
-        print("\nResultados salvos em:")
-        print("- resultados.xlsx (Excel)")
-    except PermissionError:
-        print("\nERRO: Não foi possível salvar o arquivo 'resultados.xlsx'!")
-        print("Por favor, feche o arquivo Excel se estiver aberto e tente novamente.")
-        input("Pressione Enter para continuar...")
-        return  # Sai da função main() sem continuar
-    except Exception as e:
-        print(f"\nOcorreu um erro inesperado ao salvar o Excel: {e}")
-        input("Pressione Enter para continuar...")
-        return
-    
+        
 
-    print("\nResultados salvos em:")
-    print("- resultados.xlsx (Excel)")
+    # Salvar em TXT
+    try:
+        with open('resultados.txt', 'a', encoding='utf-8') as file:
+            file.write("=== RESULTADOS ===\n")
+            file.write(f"Substância: {nomeSubs}\n")
+            file.write(f"Modelo: {modelo}\n")
+            file.write(f"Temperatura: {kelvin:.2f} K ({celsius:.2f} °C)\n")
+            file.write(f"Pressão: {bar} bar\n\n")
+            
+            file.write("=== DADOS CALCULADOS ===\n")
+            for res in resultados:
+                file.write(f"\nFase: {res['Fase']}\n")
+                file.write(f"Volume Molar: {res['Volume Molar (cm³/mol)']} cm³/mol\n")
+                file.write(f"Massa Específica: {res['Massa Específica (g/cm³)']} g/cm³\n")
+        
+        print("\nResultados salvos em:")
+        print("- resultados.txt (TXT)")
+    
+    except Exception as e:
+        print(f"\nErro ao salvar o arquivo TXT: {e}")
     
     
 if __name__ == "__main__":
