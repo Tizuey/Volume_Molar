@@ -51,12 +51,9 @@ def main():
     print("")
     print("Exemplo de T = 333.15K = 60°C  e  P = 13.76  ")
     print("")
-    celsius = float(input("Digite a temperatura de operação (T) [°C]: "))
+    kelvin = float(input("Digite a temperatura de operação (T) em kelvin[K]: "))
     bar = float(input("Digite a pressão de operação (P) [bar]: "))
 
-
-    # Converter temperatura para Kelvin
-    kelvin = celsius + 273.15 
 
     # Criando os "vetores" CRT e COND 
     crt = [tc, pc]
@@ -88,7 +85,7 @@ def main():
             file.write("=== RESULTADOS ===\n")
             file.write(f"Substância: {nomeSubs}\n")
             file.write(f"Modelo: {modelo}\n")
-            file.write(f"Temperatura: {kelvin:.2f} K ({celsius:.2f} °C)\n")
+            file.write(f"Temperatura: {kelvin:.2f} K\n")
             file.write(f"Pressão: {bar} bar\n\n")
             
             file.write("=== DADOS CALCULADOS ===\n")

@@ -1,15 +1,45 @@
 === RESULTADOS ===
-Substância: Cloreto de Metila
-Modelo: PR
-Temperatura: 606.30 K (333.15 °C)
+Substância: cloreto de metila
+Modelo: VDW
+Temperatura: 333.15 K )
 Pressão: 13.76 bar
 
 === DADOS CALCULADOS ===
 
 Fase: Líquido
-Volume Molar: 3697.2623 cm³/mol
-Massa Específica: 0.013656 g/cm³
+Volume Molar: 2064.0026 cm³/mol
+Massa Específica: 0.024461 g/cm³
 
 Fase: Vapor
-Volume Molar: 3697.2623 cm³/mol
-Massa Específica: 0.013656 g/cm³
+Volume Molar: 2064.0026 cm³/mol
+Massa Específica: 0.024461 g/cm³
+=== RESULTADOS ===
+Substância: cloreto de metila
+Modelo: RK
+Temperatura: 333.15 K )
+Pressão: 13.76 bar
+
+=== DADOS CALCULADOS ===
+
+Fase: Líquido
+Volume Molar: 1712.8011 cm³/mol
+Massa Específica: 0.029477 g/cm³
+
+Fase: Vapor
+Volume Molar: 1712.8011 cm³/mol
+Massa Específica: 0.029477 g/cm³
+=== RESULTADOS ===
+Substância: cloreto de metila
+Modelo: PR
+Temperatura: 333.15 K )
+Pressão: 13.76 bar
+
+=== DADOS CALCULADOS ===
+
+Fase: Líquido
+Volume Molar: 2037.8538 cm³/mol
+Massa Específica: 0.024775 g/cm³
+
+Fase: Vapor
+Volume Molar: 2037.8538 cm³/mol
+Massa Específica: 0.024775 g/cm³
